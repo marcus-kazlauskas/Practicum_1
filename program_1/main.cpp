@@ -19,7 +19,7 @@ int main(int argc, const char * argv[]) {
     double xInit = 0;                                   // начало отрезка
     double xEnd = 1;                                    // конец отрезка
     double x0 = 1/sqrt(2);                              // точка разрыва
-    double e = 0.0001;                                  // относительная погрешность
+    double e = 0.0001;                                  // погрешность
     double u_mod[11], u1_mod[11], u2_mod[11];
     double u1[11], u2[11];
     double h = (xEnd-xInit)/10;                         // начальное значение шага вычислений (отрезок делится на 10 частей, чтобы посчитать значения ф-ции в 11 точках)
@@ -38,7 +38,7 @@ int main(int argc, const char * argv[]) {
         u2[l] = 1;
     }
     
-    while ((norm1(u2_mod, u1_mod)/1) > e){       // численное решение модельной задачи; магическое число 1 = xEnd-xInit
+    while ((norm1(u2_mod, u1_mod)/1) > e){       // численное решение модельной задачи
         tma_mod(u2_mod, h, x0, n, xInit);
         tma_mod(u1_mod, h/2, x0, n*2, xInit);
         
