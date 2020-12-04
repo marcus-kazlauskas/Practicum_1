@@ -157,7 +157,7 @@ void tma_mod(double *u, double h, double x0, int n, double xInit){          // �
     alpha[1] = -a1(x0)/b1(x0, h);                           //
     beta[1] = (d1(x0, h)-c1(x0)*u[0])/b1(x0, h);
     alpha[10*n-1] = -c2(x0)/b2(x0, h);
-    beta[10*n-1] = (d2(x0, h)-c2(x0)*u[10])/b2(x0, h);
+    beta[10*n-1] = (d2(x0, h)-a2(x0)*u[10])/b2(x0, h);
     
     for (int l = 1; xInit+l*h < x0; l++){       // поиск точки la до точки разрыва; да, лучше было просто поделить и привести к целому типу
         la += 1;
@@ -172,7 +172,7 @@ void tma_mod(double *u, double h, double x0, int n, double xInit){          // �
     
     for (int l = 10*n-2; l > lb; l--){                                              // прогонка от 1 до lb
         alpha[l] = -c2(x0)/(b2(x0, h)+a2(x0)*alpha[l+1]);
-        beta[l] = (d2(x0, h)-a2(x0)*beta[l+1])/(b2(x0, h)+c2(x0)*alpha[l+1]);
+        beta[l] = (d2(x0, h)-a2(x0)*beta[l+1])/(b2(x0, h)+a2(x0)*alpha[l+1]);
     }
     
     uBuf = (k1_x(x0)*beta[la-1]+k2_x(x0)*beta[lb+1])/(k1_x(x0)*(1-alpha[la-1])+k2_x(x0)*(1-alpha[lb+1]));   // u(la)
@@ -205,7 +205,7 @@ void tma(double *u, double h, double x0, int n, double xInit){              // �
     alpha[1] = -a1_x(xInit+h, h)/b1_x(xInit+h, h);
     beta[1] = (d1_x(xInit+h, h)-c1_x(xInit+h, h)*u[0])/b1_x(xInit+h, h);
     alpha[10*n-1] = -c2_x(xInit+h*(10*n-1), h)/b2_x(xInit+h*(10*n-1), h);
-    beta[10*n-1] = (d2_x(xInit+h*(10*n-1), h)-c2_x(xInit+h*(10*n-1), h)*u[10])/b2_x(xInit+h*(10*n-1), h);
+    beta[10*n-1] = (d2_x(xInit+h*(10*n-1), h)-a2_x(xInit+h*(10*n-1), h)*u[10])/b2_x(xInit+h*(10*n-1), h);
     
     for (int l = 1; xInit+l*h < x0; l++){       // поиск точки la до точки разрыва; да, лучше было просто поделить и привести к целому типу
         la += 1;
@@ -220,7 +220,7 @@ void tma(double *u, double h, double x0, int n, double xInit){              // �
     
     for (int l = 10*n-2; l > lb; l--){
         alpha[l] = -c2_x(xInit+h*l, h)/(b2_x(xInit+h*l, h)+a2_x(xInit+h*l, h)*alpha[l+1]);
-        beta[l] = (d2_x(xInit+h*l, h)-a2_x(xInit+h*l, h)*beta[l+1])/(b2_x(xInit+h*l, h)+c2_x(xInit+h*l, h)*alpha[l+1]);
+        beta[l] = (d2_x(xInit+h*l, h)-a2_x(xInit+h*l, h)*beta[l+1])/(b2_x(xInit+h*l, h)+a2_x(xInit+h*l, h)*alpha[l+1]);
     }
     
     uBuf = (k1_x(xInit+h*la)*beta[la-1]+k2_x(xInit+h*lb)*beta[lb+1])/(k1_x(xInit+h*la)*(1-alpha[la-1])+k2_x(xInit+h*lb)*(1-alpha[lb+1]));   // u(la)

@@ -38,7 +38,7 @@ int main(int argc, const char * argv[]) {
         u2[l] = 1;
     }
     
-    while ((norm1(u2_mod, u1_mod)/1) > e){       // численное решение модельной задачи
+    while ((norm1(u2_mod, u1_mod)/(pow(2, 2)-1)) > e){       // численное решение модельной задачи
         tma_mod(u2_mod, h, x0, n, xInit);
         tma_mod(u1_mod, h/2, x0, n*2, xInit);
         
@@ -79,7 +79,7 @@ int main(int argc, const char * argv[]) {
     h = hConst;
     n = 1;
     
-    while ((norm1(u2, u1)/1) > e){               // численное решение основной задачи; магическое число 1 = xEnd-xInit
+    while ((norm1(u2, u1)/(pow(2, 2)-1)) > e){               // численное решение основной задачи; магическое число 1 = xEnd-xInit
         tma(u2, h, x0, n, xInit);
         tma(u1, h/2, x0, n*2, xInit);
         
